@@ -5,7 +5,7 @@ export default function Home() {
    const [logs, setLogs] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/import-logs')
+    axios.get('https://job-import-system-ehcw.onrender.com/api/import-logs')
       .then(res => setLogs(res.data))
       .catch(err => console.error(err));
   }, []);
