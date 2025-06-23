@@ -95,7 +95,7 @@ const JobImportLogs = () => {
         >
           Previous
         </button>
-
+            
         <span className="text-sm sm:text-base">
           Page {page} of {totalPages}
         </span>
