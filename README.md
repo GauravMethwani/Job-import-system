@@ -1,66 +1,92 @@
-# Client - Job Import System
+# Job Import System
 
-This is the **frontend** of the Job Import System built using **Next.js / React**.
-
----
-
-## Tech Stack
-
-- Next.js / React
-- JavaScript / TypeScript
-- Tailwind CSS or Custom CSS
-- Axios (for API calls)
-- Other dependencies as needed
+A full-stack application that fetches jobs from external RSS/XML feeds, processes them using a backend service, and displays them on a frontend interface.
 
 ---
 
-## 🚀 Getting Started
-### 1. Clone & Install
+##  Clone the Repository
 
 ```bash
 git clone https://github.com/GauravMethwani/job-importer.git
+cd job-importer
+```
 
-### 1. Install Dependencies
+---
+
+## Frontend – Client (`/client`)
+
+### Tech Stack
+
+- Next.js / React
+- Tailwind CSS
+- Axios
+
+###  Getting Started
 
 ```bash
+cd client
 npm install
 npm run dev
+```
 
+The frontend will run at: `http://localhost:3000`
 
-# Job Importer - Backend
+###  Environment Variable
 
-This is the backend service for the Job Importer system. It fetches jobs from external RSS/XML feeds, processes them, and stores them in MongoDB. The system runs automatically every hour and maintains a log of all imported jobs.
+Create `.env.local` file in `client/` with:
 
----
-
-## Features
-
-- Fetch jobs from multiple RSS/XML feeds
-- Convert XML data to JSON
-- Queue jobs using Redis (BullMQ)
-- Process jobs in background and store in MongoDB
-- Log total fetched, new, updated, and failed jobs
-- Automatically run job fetching every hour
+```env
+NEXT_PUBLIC_API_URL=http://localhost:5000
+```
 
 ---
 
-## Tech Stack
+##  Backend – Server (`/server`)
+
+### 🛠 Tech Stack
 
 - Node.js + Express
-- MongoDB (Atlas)
-- Redis (via BullMQ)
+- MongoDB (Mongoose)
+- Redis (BullMQ)
 - Axios + xml2js
 - node-cron
 
+### Features
 
+- Fetch jobs from multiple RSS/XML feeds
+- Convert XML to JSON
+- Queue and process jobs in the background
+- Automatically run job imports every hour
+- Log total fetched, new, updated, and failed jobs
 
-## Setup & Installation
-
-### 1. Clone & Install
+### Getting Started
 
 ```bash
-git clone https://github.com/GauravMethwani/job-importer.git
 cd server
 npm install
-index.js
+```
 
+Create a `.env` file in `server/`:
+
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+REDIS_URL=your_redis_connection_url
+```
+
+Start the backend server:
+
+```bash
+npm run dev
+```
+
+Server will run at: `http://localhost:5000`
+
+---
+
+## Final Notes
+
+- Make sure MongoDB and Redis are running before starting the backend.
+- The frontend will consume APIs from `http://localhost:5000`.
+
+---
