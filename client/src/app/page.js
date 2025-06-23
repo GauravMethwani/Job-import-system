@@ -11,9 +11,20 @@ const fetchLogs = async (currentPage) => {
   try {
     const res = await axios.get(
       `https://job-import-system-ehcw.onrender.com/api/import-logs?page=${currentPage}&limit=10`
-    );
-    setLogs(res.data.logs);
-    setTotalPages(res.data.totalPages);
+    );   
+    console.log("API response:", res.data); 
+    if (Array.isArray(res.data.logs)) {
+      setLogs(res.data.logs);
+      setTotalPages(res.data.totalPages);
+    } 
+    else if (Array.isArray(res.data)) {
+      setLogs(res.data); 
+      setTotalPages(1); 
+    } 
+    else {
+      setLogs([]); 
+      console.error("Unexpected API response format", res.data);
+    }
   } catch (error) {
     console.error("Failed to fetch logs", error);
   }
