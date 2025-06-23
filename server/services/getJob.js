@@ -5,7 +5,7 @@ const jobQueue = require('../queue/jobQueue');
 const jobFeeds = [
   'https://jobicy.com/?feed=job_feed',
   'https://jobicy.com/?feed=job_feed&job_categories=data-science',
-  'https://jobicy.com/?feed=job_feed&job_categories=seller&job_types=full-time&search_region=france'
+  'https://jobicy.com/?feed=job_feed&job_categories=seller&job_types=full-time&search_region=france',
   'https://jobicy.com/?feed=job_feed&job_categories=design-multimedia'
 ];
 
