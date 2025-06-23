@@ -12,12 +12,17 @@ const JobImportLogs = () => {
       const res = await axios.get(
         `https://job-import-system-ehcw.onrender.com/api/import-logs?page=${currentPage}&limit=10`
       );
-      console.log("Fetched logs:", res.data.logs); // debug log
-      setLogs(Array.isArray(res.data.logs) ? res.data.logs : []);
-      setTotalPages(res.data.totalPages || 1);
+
+      if (Array.isArray(res.data.logs)) {
+        setLogs(res.data.logs);
+        setTotalPages(res.data.totalPages || 1);
+      } else {
+        console.error("logs is not an array:", res.data.logs);
+        setLogs([]);
+      }
     } catch (error) {
       console.error("Failed to fetch logs", error);
-      setLogs([]); // fallback
+      setLogs([]);
     }
   };
 
@@ -38,6 +43,10 @@ const JobImportLogs = () => {
       <h1 className="text-2xl font-bold mb-4">Job Import Logs</h1>
 
       <div className="overflow-x-auto bg-white rounded shadow">
+        {!Array.isArray(logs) && (
+          <div className="text-red-500 p-2">Error loading logs.</div>
+        )}
+
         <table className="min-w-full text-sm sm:text-base">
           <thead>
             <tr className="bg-gray-200 text-left text-xs sm:text-sm">
@@ -51,21 +60,28 @@ const JobImportLogs = () => {
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(logs) && logs.map((log, i) => (
-              <tr key={i} className="border-t hover:bg-gray-50">
-                <td className="p-2 text-blue-600 break-all">{log.fileName}</td>
-                <td className="p-2">{log.totalFetched}</td>
-                <td className="p-2">{log.totalImported}</td>
-                <td className="p-2">{log.newJobs}</td>
-                <td className="p-2">{log.updatedJobs}</td>
-                <td className="p-2">{log.failedJobs?.length ?? 0}</td>
-                <td className="p-2">
-                  {log.createdAt
-                    ? new Date(log.createdAt).toLocaleString()
-                    : "N/A"}
-                </td>
-              </tr>
-            ))}
+            {Array.isArray(logs) &&
+              logs.map((log, i) => (
+                <tr key={i} className="border-t hover:bg-gray-50">
+                  <td className="p-2 text-blue-600 break-all">
+                    {log.fileName}
+                  </td>
+                  <td className="p-2">{log.totalFetched}</td>
+                  <td className="p-2">{log.totalImported}</td>
+                  <td className="p-2">{log.newJobs}</td>
+                  <td className="p-2">{log.updatedJobs}</td>
+                  <td className="p-2">
+                    {Array.isArray(log.failedJobs)
+                      ? log.failedJobs.length
+                      : 0}
+                  </td>
+                  <td className="p-2">
+                    {log.createdAt
+                      ? new Date(log.createdAt).toLocaleString()
+                      : "N/A"}
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
