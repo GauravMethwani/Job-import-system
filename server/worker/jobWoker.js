@@ -41,7 +41,7 @@ const worker = new Worker('jobs', async (job) => {
   let jobData = {};
 
   try {
-    console.log("👷 Received Job:", job.id);
+    console.log("Received Job:", job.id);
 
     jobData = {
       title: data.title,
@@ -58,7 +58,7 @@ const worker = new Worker('jobs', async (job) => {
     if (existing) {
       await Job.updateOne({ _id: existing._id }, jobData);
       stats.updatedJobs++;
-      console.log(`🔁 Updated Job: ${jobData.title}`);
+      console.log(` Updated Job: ${jobData.title}`);
     } else {
       await Job.create(jobData);
       stats.newJobs++;
@@ -88,7 +88,7 @@ worker.on('completed', async () => {
     };
 
     await ImportLog.create(log);                     
-    console.log('📝 Import log saved to MongoDB');
+    console.log(' Import log saved to MongoDB');
 
     stats = {
       totalFetched: 0,
