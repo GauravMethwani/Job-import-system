@@ -11,7 +11,7 @@ const app = express();
 app.use(express.json());
 
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'https://job-import-system-theta.vercel.app' }));
 
 app.use('/api/import-logs', importLogRoutes);
 
